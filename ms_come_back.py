@@ -1,18 +1,7 @@
-import sys
-import os
-import time
-import numpy as np
-
-sys.path.append(os.path.join(os.path.dirname(__file__), 'drivers-ddboat-v2'))
-import imu9_driver_v2 as imu_driver
-import arduino_driver_v2 as arduino_driver
-from mini_roblib import sawtooth
-from calibration import load_calibration
-from get_heading import get_heading
-from get_gps import get_gps
+from ws3k2_drivers import *
 
 
-def go_straight_gps(ref_point, aimed_point, straight_speed, kp, eps=5, Hz=5):
+def go_straight_gps(boat, ref_point, aimed_point, straight_speed, kp, eps=5, Hz=5):
         rho = 6400000
 
         lxm = np.radians(ref_point[0])
