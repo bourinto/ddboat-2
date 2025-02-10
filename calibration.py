@@ -14,7 +14,7 @@ def get_magnetometer_data():
     imu = imudrv.Imu9IO()
     # Read raw magnetic data (x, y, z)
     x, y, z = imu.read_mag_raw()
-    print("Raw magnetometer data:", x, y, z)
+    print("Raw magnetometer data: {} {} {}".format(x, y, z))
     return np.array([[x], [y], [z]])
 
 
@@ -23,7 +23,7 @@ def save_calibration(filename, bmag, Amag):
     Saves the calibration offset and matrix to a file using NumPy's savez format.
     """
     np.savez(filename, bmag=bmag, Amag=Amag)
-    print(f"Calibration data saved to {filename}")
+    print("Calibration data saved to {}".format(filename))
 
 
 def load_calibration(filename):
@@ -47,19 +47,15 @@ if __name__ == "__main__":
     # For each orientation, wait for user confirmation then capture raw data.
     input("Place the boat in the NORTH orientation and press Enter...")
     xN = get_magnetometer_data()
-    print("Data: ", xN)
 
     input("Place the boat in the SOUTH orientation and press Enter...")
     xS = get_magnetometer_data()
-    print("Data: ", xS)
 
     input("Place the boat in the WEST orientation and press Enter...")
     xW = get_magnetometer_data()
-    print("Data: ", xW)
 
     input("Place the boat in the UP orientation and press Enter...")
     xU = get_magnetometer_data()
-    print("Data: ", xU)
 
     # Define expected magnetic field vectors for each orientation:
     yN = np.array([[B * np.cos(I)], [0], [-B * np.sin(I)]])
@@ -76,15 +72,16 @@ if __name__ == "__main__":
 
     # Compute the calibration matrix Amag
     Amag = X @ np.linalg.inv(Y)
-    Amag_inv = np.linalg.inv(Amag)
 
     # Print the calibration results:
     print("\n--- Calibration Results ---")
-    print("Calibration offset (bmag):\n", bmag)
-    print("Calibration matrix (Amag):\n", Amag_inv)
+    print("Calibration offset (bmag):\n{}".format(bmag))
+    print("Calibration matrix (Amag):\n{}".format(Amag))
+    print("Inverse calibration matrix (A^-1):\n{}".format(np.linalg.inv(Amag)))
 
     # Save the calibration data for later use:
     calibration_filename = "calibration_data.npz"
-    save_calibration(calibration_filename, bmag, Amag_inv)
+    save_calibration(calibration_filename, bmag, Amag)
 
+    # Example usage of the load_calibration function:
     # bmag, Amag = load_calibration("calibration_data.npz")

@@ -1,4 +1,5 @@
 /drivers-ddboat-v2
 /logs
+/.idea
+/__pycache__
 calibration_data.npz
-
