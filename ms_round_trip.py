@@ -16,15 +16,6 @@ Kp = 130
 Kp_rot = 80
 base_speed = 150
 
-class Filter:
-    def __init__(self):
-        self.__values = [0]*30
-
-    def filter(self, data):
-        self.__values.append(data)
-        self.__values.pop(0)
-        return np.median(self.__values)
-
 if __name__ == '__main__':
     # Initialize IMU and Arduino
     imu = imu_driver.Imu9IO()
@@ -35,13 +26,12 @@ if __name__ == '__main__':
 
     # Initialize logger and filter
     logger = write_log.Log(['heading', 'correction'])
-    f = Filter()
 
     # Phase 1: Move NW for 30 seconds
     start_time = time.time()
     target_heading = np.radians(-45)
     while time.time() - start_time < 30:
-        heading = f.filter(get_heading(imu, bmag, Amag))
+        heading = get_heading(imu, bmag, Amag)
         correction = Kp * sawtooth(target_heading - heading)
         ard.send_arduino_cmd_motor(base_speed + correction, base_speed - correction)
         logger.write_log([np.degrees(heading), correction])
@@ -52,7 +42,7 @@ if __name__ == '__main__':
     start_time = time.time()
     target_heading = np.radians(135)
     while time.time() - start_time < 10:
-        heading = f.filter(get_heading(imu, bmag, Amag))
+        heading = get_heading(imu, bmag, Amag)
         correction = Kp_rot * sawtooth(target_heading - heading)
         ard.send_arduino_cmd_motor(correction, -correction)
         logger.write_log([np.degrees(heading), correction])
@@ -63,7 +53,7 @@ if __name__ == '__main__':
     start_time = time.time()
     target_heading = np.radians(135)
     while time.time() - start_time < 30:
-        heading = f.filter(get_heading(imu, bmag, Amag))
+        heading = get_heading(imu, bmag, Amag) + np.radians(-10)
         correction = Kp * sawtooth(target_heading - heading)
         ard.send_arduino_cmd_motor(base_speed + correction, base_speed - correction)
         logger.write_log([np.degrees(heading), correction])
