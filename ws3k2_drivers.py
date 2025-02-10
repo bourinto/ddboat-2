@@ -38,19 +38,58 @@ class WS3K2(Log):
     def loc(self):
         return get_gps(self.gps_device)
 
-    def keep_heading(self, target_heading, base_speed, kp, kd, duration=30, Hz=10):
+    def follow_heading(self, target_heading, base_speed, kp, duration=30, Hz=10):
         start_time = time.time()
-        prev_error = 0
         while time.time() - start_time < duration:
             heading = self.heading()
 
             error = target_heading - heading
-            derror = prev_error - error
-
-            correction = kp * sawtooth(error) + kd * derror
+            correction = kp * sawtooth(error)
             self.motor(base_speed + correction, base_speed - correction)
 
             self.write_log([np.degrees(heading), correction])
-            prev_error = error
+
+            time.sleep(1. / Hz)
+
+    def navigate_to_waypoint(self, ref_point, aimed_point, base_speed, kp, dstop=5, Hz=10):
+        rho = 6400000  # approximate Earth radius in meters
+
+        # Convert points (lat, lon in degrees) to radians
+        lat_ref = np.radians(ref_point[0])
+        lon_ref = np.radians(ref_point[1])
+
+        lat_aimed = np.radians(aimed_point[0])
+        lon_aimed = np.radians(aimed_point[1])
+
+        # Compute target coordinates:
+        x_target = rho * np.cos(lat_ref) * (lon_aimed - lon_ref)
+        y_target = rho * (lat_aimed - lat_ref)
+        target = np.array([x_target, y_target])
+
+        # Initialize the error distance
+        distance = np.inf
+
+        while distance > dstop:
+            # Read GPS
+            gps = self.loc()
+            lat_gps = np.radians(gps[0])
+            lon_gps = np.radians(gps[1])
+
+            # Convert GPS reading
+            x_gps = rho * np.cos(lat_ref) * (lon_gps - lon_ref)
+            y_gps = rho * (lat_gps - lat_ref)
+            pos = np.array([x_gps, y_gps])
+
+            # Compute control
+            error = target - pos
+            target_heading = np.arctan2(error[1], error[0])
+            heading = self.heading()
+            correction = kp * sawtooth(target_heading - heading)
+
+            self.motor(base_speed + correction, base_speed - correction)
+
+            # Log the current state
+            distance = np.linalg.norm(error)
+            self.write_log([x_gps, y_gps, target_heading, heading, correction, distance])
 
             time.sleep(1. / Hz)
