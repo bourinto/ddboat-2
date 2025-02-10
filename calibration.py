@@ -11,10 +11,9 @@ def get_magnetometer_data():
     Creates an instance of the IMU sensor and reads raw magnetometer data.
     Returns the data as a 3x1 numpy array.
     """
-    imu = imudrv.Imu9IO()
     # Read raw magnetic data (x, y, z)
     x, y, z = imu.read_mag_raw()
-    print("Raw magnetometer data: {} {} {}".format(x, y, z))
+    print("Raw magnetometer data: {} {} {}\n".format(x, y, z))
     return np.array([[x], [y], [z]])
 
 
@@ -37,8 +36,9 @@ def load_calibration(filename):
 
 
 if __name__ == "__main__":
-    print("=== Magnetometer Calibration Process ===")
-    print("You will be prompted to position the boat in 4 orientations and press Enter.")
+    imu = imudrv.Imu9IO()
+    print("\n\n\n=== Magnetometer Calibration Process ===")
+    print("You will be prompted to position the boat in 4 orientations and press Enter.\n")
 
     # Fixed calibration parameters:
     B = 46  # micro Tesla
@@ -72,16 +72,16 @@ if __name__ == "__main__":
 
     # Compute the calibration matrix Amag
     Amag = X @ np.linalg.inv(Y)
+    Amag_inv = np.linalg.inv(Amag)
 
     # Print the calibration results:
     print("\n--- Calibration Results ---")
     print("Calibration offset (bmag):\n{}".format(bmag))
-    print("Calibration matrix (Amag):\n{}".format(Amag))
-    print("Inverse calibration matrix (A^-1):\n{}".format(np.linalg.inv(Amag)))
+    print("Calibration matrix (Amag):\n{}".format(Amag_inv))
 
     # Save the calibration data for later use:
     calibration_filename = "calibration_data.npz"
-    save_calibration(calibration_filename, bmag, Amag)
+    save_calibration(calibration_filename, bmag, Amag_inv)
 
     # Example usage of the load_calibration function:
     # bmag, Amag = load_calibration("calibration_data.npz")
