@@ -3,7 +3,7 @@ import time
 
 
 class Log:
-    def __init__(self, headers = ['X', 'Y', 'Cap GPS', 'Cap Compas', 'Correction']):
+    def __init__(self, headers):
         self.headers = headers
         self.init_log()
 
