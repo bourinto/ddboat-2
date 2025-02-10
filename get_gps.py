@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'drivers-ddboat-v2'))
 import gps_driver_v2 as gpsdrv
@@ -40,9 +41,12 @@ def average_gps_coordinates(samples=10):
         lat, long = get_gps()
         total_lat += lat
         total_long += long
+        time.sleep(0.1)
     return total_lat / samples, total_long / samples
 
 if __name__ == '__main__':
     print("Processing GPS data...")
     avg_lat, avg_long = average_gps_coordinates()
-    print(f"Averaged Coordinates: Latitude: {avg_lat}, Longitude: {avg_long}")
+    print("Averaged Coordinates: Latitude: {avg_lat}, Longitude: {avg_long}".format(avg_lat=avg_lat, avg_long=avg_long)     )
+
+# Bridge = Latitude: 48.19900500000001, Longitude: -3.0148363333333332
