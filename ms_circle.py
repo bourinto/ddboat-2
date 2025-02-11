@@ -6,7 +6,7 @@ if __name__ == '__main__':
     
 
     # Phase 1: Join the circle
-    coords_buoy = np.array([48.20010, -3.01573])
+    coords_buoy = np.array([48.20005966666666,-3.0158091666666667])
     ws3k2.navigate_to_waypoint(coords_buoy, base_speed=150, kp=130, dstop=10)
 
     # Phase 2 : Follow the circle
