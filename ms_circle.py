@@ -10,6 +10,7 @@ if __name__ == '__main__':
     ws3k2.navigate_to_waypoint(coords_buoy, base_speed=150, kp=130, dstop=10)
 
     # Phase 2 : Follow the circle
+    print("Following the circle")
     def circular_traj(t, boat = ws3k2):
         r = 40
         T = 450
