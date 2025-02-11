@@ -6,8 +6,9 @@ if __name__ == '__main__':
     
 
     # Phase 1: Join the circle
+    print("Joining the circle")
     coords_buoy = np.array([48.20005966666666,-3.0158091666666667])
-    ws3k2.navigate_to_waypoint(coords_buoy, base_speed=150, kp=130, dstop=10)
+    ws3k2.navigate_to_waypoint(coords_buoy, base_speed=150, kp=130, dstop=40)
 
     # Phase 2 : Follow the circle
     print("Following the circle")
@@ -18,6 +19,8 @@ if __name__ == '__main__':
         boat_nr = 10
         nb_boats = 18
 
+        phi = 0
+
         # Convert buoy corodinates
         rho = 6400000
         lat_buoy = coords_buoy[0]
@@ -26,8 +29,8 @@ if __name__ == '__main__':
         y_buoy = rho * (lat_buoy - boat.ref_point[0])
         pos_buoy = np.array([x_buoy, y_buoy])
 
-        return pos_buoy + np.array([r*np.cos(2*np.pi*t/T),
-                                       r*np.sin(2*np.pi*t/T)])
+        return pos_buoy + np.array([r*np.cos(2*np.pi*t/T + phi),
+                                       r*np.sin(2*np.pi*t/T + phi)])
 
     ws3k2.follow_virtual_point(virtual_traj=circular_traj, journey_time=200)
 
