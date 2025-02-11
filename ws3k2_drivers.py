@@ -16,9 +16,9 @@ from mini_roblib import *
 from write_log import Log
 
 
-class WS3K2(Log):
+class WS3K2():
     def __init__(self, headers):
-        Log.__init__(self, headers)
+        log = Log(headers)
 
         # Initialize IMU, Arduino and GPS
         self.imu = imu_driver.Imu9IO()
@@ -35,8 +35,17 @@ class WS3K2(Log):
     def heading(self):
         return get_heading(self.imu, self.bmag, self.Amag)
 
-    def loc(self):
-        return get_gps(self.gps_device)
+    def loc(self,rho=6400000, ref_point=(48.19900500000001, -3.0148363333333332)):
+        # Read GPS
+        gps = get_gps(self.gps_device)
+        lat_gps = np.radians(gps[0])
+        lon_gps = np.radians(gps[1])
+
+        # Convert GPS reading
+        x_gps = rho * np.cos(ref_point[0]) * (lon_gps - ref_point[1])
+        y_gps = rho * (lat_gps - ref_point[0])
+        pos = np.array([x_gps, y_gps])
+        return pos
 
     def follow_heading(self, target_heading, base_speed, kp, duration=30, Hz=10):
         start_time = time.time()
@@ -70,16 +79,7 @@ class WS3K2(Log):
         distance = np.inf
 
         while distance > dstop:
-            # Read GPS
-            gps = self.loc()
-            lat_gps = np.radians(gps[0])
-            lon_gps = np.radians(gps[1])
-
-            # Convert GPS reading
-            x_gps = rho * np.cos(lat_ref) * (lon_gps - lon_ref)
-            y_gps = rho * (lat_gps - lat_ref)
-            pos = np.array([x_gps, y_gps])
-
+            pos = self.loc()
             # Compute control
             error = target - pos
             target_heading = np.arctan2(error[1], error[0])
@@ -90,6 +90,6 @@ class WS3K2(Log):
 
             # Log the current state
             distance = np.linalg.norm(error)
-            self.write_log([x_gps, y_gps, target_heading, heading, correction, distance])
+            self.logger.write_log([pos[0], pos[1], target_heading, heading, correction, distance])
 
             time.sleep(1. / Hz)
