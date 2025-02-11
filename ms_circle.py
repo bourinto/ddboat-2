@@ -11,7 +11,7 @@ if __name__ == '__main__':
     # Phase 2 : Follow the circle
     def circular_traj(t, boat = ws3k2):
         r = 40
-        T = 200
+        T = 450
 
         boat_nr = 10
         nb_boats = 18
