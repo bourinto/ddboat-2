@@ -16,7 +16,7 @@ from mini_roblib import *
 from write_log import Log
 
 
-class WS3K2():
+class WS3K2:
     def __init__(self, headers):
         self.logger = Log(headers)
 
@@ -45,8 +45,8 @@ class WS3K2():
         lon_gps = np.radians(gps[1])
 
         # Convert GPS reading
-        x_gps = rho * np.cos(self.ref_point[0]) * (lon_gps - self.ref_point[1])
-        y_gps = rho * (lat_gps - self.ref_point[0])
+        x_gps = rho * np.cos(np.radians(self.ref_point[0])) * (lon_gps - np.radians(self.ref_point[1]))
+        y_gps = rho * (lat_gps - np.radians(self.ref_point[0]))
         pos = np.array([x_gps, y_gps])
         return pos
 
