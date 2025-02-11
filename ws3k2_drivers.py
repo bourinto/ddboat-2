@@ -63,7 +63,7 @@ class WS3K2():
 
             time.sleep(1. / Hz)
 
-    def navigate_to_waypoint(self, aimed_point=np.array([48.199665, -3.0154350000000014]), base_speed=150 , kp=130, dstop=5, Hz=10):
+    def navigate_to_waypoint(self, aimed_point, base_speed , kp, dstop=5, Hz=10):
         rho = 6400000  # approximate Earth radius in meters
 
         # Convert points (lat, lon in degrees) to radians
