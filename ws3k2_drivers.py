@@ -85,7 +85,7 @@ class WS3K2:
             pos = self.loc()
             # Compute control
             error = target - pos
-            target_heading = np.arctan2(error[1], error[0])
+            target_heading = np.arctan2(error[0], error[1])
             heading = self.heading()
             correction = kp * sawtooth(target_heading - heading)
 
@@ -103,14 +103,14 @@ class WS3K2:
         t = 0
 
         heading_kP = 130
-        speed_kP = 15
+        speed_kP = 18
 
         while t < journey_time:
             t = time.time()-t0
             target = virtual_traj(t)
 
-            error = target - self.loc
-            target_heading = np.arctan2(error[1], error[0])
+            error = target - self.loc()
+            target_heading = np.arctan2(error[0], error[1])
             heading = self.heading()
             heading_error = sawtooth(target_heading - heading)
             heading_correction = heading_kP * heading_error
@@ -119,10 +119,10 @@ class WS3K2:
             if distance_error < 10:
                 base_speed = speed_kP * distance_error
             else:
-                base_speed = 150
+                base_speed = 180
 
             self.motor(base_speed + heading_correction, base_speed - heading_correction)
 
-            self.logger.write_log([0,0,0,np.degrees(heading), heading_correction,0])
+            self.logger.write_log([0,0,0,np.degrees(heading), heading_correction, distance_error])
 
             time.sleep(0.1)
