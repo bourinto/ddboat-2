@@ -2,7 +2,8 @@ from ws3k2_drivers import *
 
 if __name__ == '__main__':
     # Initialization
-    ws3k2 = WS3K2(['heading', 'correction'])
+    ws3k2 = WS3K2(['x','y','target_heading','heading', 'correction','distance'])
+    
 
     # Phase 1: Join the circle
     coords_buoy = np.array([48.20010, -3.01573])

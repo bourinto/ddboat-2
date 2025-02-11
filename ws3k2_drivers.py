@@ -123,6 +123,6 @@ class WS3K2():
 
             self.motor(base_speed + heading_correction, base_speed - heading_correction)
 
-            self.logger.write_log([np.degrees(heading), heading_correction])
+            self.logger.write_log([0,0,0,np.degrees(heading), heading_correction,0])
 
             time.sleep(0.1)
