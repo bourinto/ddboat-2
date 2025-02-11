@@ -30,7 +30,7 @@ class WS3K2():
         self.bmag, self.Amag = load_calibration("calibration_data.npz")
 
         # Reference variables
-        self.ref_point = (48.19900500000001, -3.0148363333333332)
+        self.ref_point = np.array([48.19900500000001, -3.0148363333333332])
 
     def motor(self, spd_left, spd_right):
         self.ard.send_arduino_cmd_motor(spd_left, spd_right)
