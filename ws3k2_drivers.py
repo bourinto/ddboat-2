@@ -10,14 +10,14 @@ import gps_driver_v2 as gpsdrv
 
 from calibration import load_calibration
 from get_heading import get_heading
-from get_gps import get_gps
+from get_gps import get_gps_wt
 from mini_roblib import *
 
 from write_log import Log
 
 
 class WS3K2:
-    def __init__(self, headers = ['x','y','target_heading','heading', 'correction','distance']):
+    def __init__(self, headers=['x', 'y', 'target_heading', 'heading', 'correction', 'distance']):
         self.logger = Log(headers)
 
         # Initialize IMU, Arduino and GPS
@@ -38,9 +38,9 @@ class WS3K2:
     def heading(self):
         return get_heading(self.imu, self.bmag, self.Amag)
 
-    def loc(self,rho=6400000):
+    def loc(self, with_time=False, rho=6400000):
         # Read GPS
-        gps = get_gps(self.gps_device)
+        gps, timestamp = get_gps_wt(self.gps_device)
         lat_gps = np.radians(gps[0])
         lon_gps = np.radians(gps[1])
 
@@ -48,7 +48,7 @@ class WS3K2:
         x_gps = rho * np.cos(np.radians(self.ref_point[0])) * (lon_gps - np.radians(self.ref_point[1]))
         y_gps = rho * (lat_gps - np.radians(self.ref_point[0]))
         pos = np.array([x_gps, y_gps])
-        return pos
+        return (pos, timestamp) if with_time else pos
 
     def follow_heading(self, target_heading, base_speed, kp, duration=30, Hz=10):
         start_time = time.time()
@@ -63,7 +63,7 @@ class WS3K2:
 
             time.sleep(1. / Hz)
 
-    def navigate_to_waypoint(self, aimed_point, base_speed , kp, dstop=5, Hz=10):
+    def navigate_to_waypoint(self, aimed_point, base_speed, kp, dstop=5, Hz=10):
         rho = 6400000  # approximate Earth radius in meters
 
         # Convert points (lat, lon in degrees) to radians
@@ -97,19 +97,17 @@ class WS3K2:
 
             time.sleep(1. / Hz)
 
-
     def follow_virtual_point(self, virtual_traj, journey_time):
         t0 = time.time()
-        t = 0
 
         heading_kP = 130
         speed_kP = 18
 
-        while t < journey_time:
-            t = time.time()-t0
-            target = virtual_traj(t)
-            pos = self.loc()
+        while time.time() - t0 < journey_time:
+            pos, timestamp = self.loc(with_time=True)
+            target = virtual_traj(timestamp)
             error = target - pos
+
             target_heading = np.arctan2(error[0], error[1])
             heading = self.heading()
             heading_error = sawtooth(target_heading - heading)
@@ -123,6 +121,7 @@ class WS3K2:
 
             self.motor(base_speed + heading_correction, base_speed - heading_correction)
 
-            self.logger.write_log([pos[0],pos[1],target_heading,np.degrees(heading), heading_correction, distance_error])
+            self.logger.write_log(
+                [pos[0], pos[1], target_heading, np.degrees(heading), heading_correction, distance_error])
 
             time.sleep(0.1)
