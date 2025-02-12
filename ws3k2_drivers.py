@@ -10,7 +10,7 @@ import gps_driver_v2 as gpsdrv
 
 from calibration import load_calibration
 from get_heading import get_heading
-from get_gps import get_gps_wt
+from get_gps import get_gps_wt, convert_gps_coordinate
 from mini_roblib import *
 from client_server import robot2_client_onetime
 
@@ -53,13 +53,15 @@ class WS3K2:
         return (pos, timestamp) if with_time else pos
     
     def get_gps_server(self,server_ip="172.20.25.217"):
-        self.gps_data_server = robot2_client_onetime(server_ip)
-        lat,ns,lon,ew = self.gps_data_server.split(';')
-        lat = float(lat)
-        lon = float(lon)
-        if ns =='S':
+        measured_gps_data_server = robot2_client_onetime(server_ip)
+        if len(measured_gps_data_server) != 0:
+            self.gps_data_server = measured_gps_data_server
+        lat,ns,lon,ew = self.gps_data_server.split(';')[:4]
+        lat, lon = float(lat), float(lon)
+        lat, lon = convert_gps_coordinate(lat), convert_gps_coordinate(lon)
+        if ns[0] =='S':
             lat =-lat
-        if ew =='W':
+        if ew[0] =='W':
             lon = -lon
         return np.array([lat,lon])
 
