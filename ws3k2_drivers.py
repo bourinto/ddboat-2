@@ -12,6 +12,7 @@ from calibration import load_calibration
 from get_heading import get_heading
 from get_gps import get_gps_wt
 from mini_roblib import *
+from client_server import robot2_client_onetime
 
 from write_log import Log
 
@@ -25,6 +26,7 @@ class WS3K2:
         self.ard = arduino_driver.ArduinoIO()
         self.gps_device = gpsdrv.GpsIO()
         self.gps_device.set_filter_speed('0')
+        self.gps_data_server = None
 
         # Load calibration data
         self.bmag, self.Amag = load_calibration("calibration_data.npz")
@@ -49,6 +51,17 @@ class WS3K2:
         y_gps = rho * (lat_gps - np.radians(self.ref_point[0]))
         pos = np.array([x_gps, y_gps])
         return (pos, timestamp) if with_time else pos
+    
+    def get_gps_server(self,server_ip="172.20.25.217"):
+        self.gps_data_server = robot2_client_onetime(server_ip)
+        lat,ns,lon,ew = self.gps_data_server.split(';')
+        lat = float(lat)
+        lon = float(lon)
+        if ns =='S':
+            lat =-lat
+        if ew =='W':
+            lon = -lon
+        return np.array([lat,lon])
 
     def follow_heading(self, target_heading, base_speed, kp, duration=30, Hz=10):
         start_time = time.time()
