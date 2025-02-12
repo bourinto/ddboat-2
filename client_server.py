@@ -46,7 +46,7 @@ def robot1_server():
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind(('0.0.0.0', 5000))  # Listen on all available interfaces
     server_socket.listen(15)  # Allow up to 15 clients
-    print("DDBoat 17 (Server) is waiting for connections...")
+    print("DDBoat 10 (Server) is waiting for connections...")
     
     while True:
         conn, addr = server_socket.accept()
@@ -103,10 +103,5 @@ def robot2_client_onetime(server_ip):
 
 if __name__ == "__main__":
     import sys
-    if len(sys.argv) > 1 and sys.argv[1] == "client":
-        robot2_client_loop("172.20.25.217")  # Change IP if running on different machines
-    elif  len(sys.argv) > 1 and sys.argv[1] == "single":
-        gps_pos = robot2_client_onetime("172.20.25.217")
-    else:
-        robot1_server()
+    robot1_server()
 
