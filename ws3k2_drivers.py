@@ -115,7 +115,7 @@ class WS3K2:
         t0 = time.time()
 
         heading_kP = 130
-        speed_kP = 30
+        speed_kP = 25
 
         while time.time() - t0 < journey_time:
             pos, timestamp = self.loc(with_time=True)
@@ -128,10 +128,12 @@ class WS3K2:
             heading_correction = heading_kP * heading_error
 
             distance_error = np.linalg.norm(error)
-            if distance_error < 10:
+            if distance_error < 2:
+                base_speed = 0
+            elif distance_error < 10:
                 base_speed = speed_kP * distance_error
             else:
-                base_speed = 180
+                base_speed = 250
 
             self.motor(base_speed + heading_correction, base_speed - heading_correction)
 
