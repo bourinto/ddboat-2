@@ -17,7 +17,7 @@ from write_log import Log
 
 
 class WS3K2:
-    def __init__(self, headers):
+    def __init__(self, headers = ['x','y','target_heading','heading', 'correction','distance']):
         self.logger = Log(headers)
 
         # Initialize IMU, Arduino and GPS
@@ -108,8 +108,8 @@ class WS3K2:
         while t < journey_time:
             t = time.time()-t0
             target = virtual_traj(t)
-
-            error = target - self.loc()
+            pos = self.loc()
+            error = target - pos
             target_heading = np.arctan2(error[0], error[1])
             heading = self.heading()
             heading_error = sawtooth(target_heading - heading)
@@ -123,6 +123,6 @@ class WS3K2:
 
             self.motor(base_speed + heading_correction, base_speed - heading_correction)
 
-            self.logger.write_log([0,0,0,np.degrees(heading), heading_correction, distance_error])
+            self.logger.write_log([pos[0],pos[1],target_heading,np.degrees(heading), heading_correction, distance_error])
 
             time.sleep(0.1)
