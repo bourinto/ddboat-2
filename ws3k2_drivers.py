@@ -111,6 +111,8 @@ class WS3K2:
 
             time.sleep(1. / Hz)
 
+        self.motor(0, 0)
+
     def follow_virtual_point(self, virtual_traj, journey_time):
         t0 = time.time()
 
