@@ -48,7 +48,7 @@ def save_calibration(filename, bmag, Amag):
     Saves the calibration offset and matrix to a file using NumPy's savez format.
     """
     np.savez(filename, bmag=bmag, Amag=Amag)
-    print("Calibration data saved to {}".format(filename))
+    print("\nCalibration data saved to {}".format(filename))
 
 
 def load_calibration(filename):
@@ -86,7 +86,7 @@ def do_calibration(boat_nb):
 
         # Compute calibration data
         bmag, Amag = compute_calibration(xN, xS, xW, xU)
-        print("\n--- Calibration Results ---")
+        print("\n--- Calibration Results ---\n")
         print("Calibration offset (bmag):\n{}".format(bmag))
         print("Calibration matrix (Amag):\n{}".format(Amag))
 

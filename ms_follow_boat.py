@@ -1,4 +1,5 @@
 from ws3k2_drivers import *
+import argparse
 
 
 class MSFollow:
@@ -11,12 +12,18 @@ class MSFollow:
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-id", help="ddboat number")
+    args = parser.parse_args()
+
     # Initialization
     ws3k2 = WS3K2(['x', 'y', 'xt', 'yt', 'target_heading', 'heading', 'correction', 'distance'])
-    target = MSFollow("172.20.25.217", ws3k2.get_gps_server_xy)
+    target = MSFollow("172.20.25.2" + args.id, ws3k2.get_gps_server_xy)
 
-    print("\n===== Following DDBoat {} =====\n".format(int(target.ip[-2:])))
+    print("\n===== FOLLOWING DDBOAT {} =====\n".format(args.id))
     try:
         ws3k2.follow_virtual_point(virtual_traj=target.trajectory, journey_time=np.inf)
     except:
+        print("\n===== END OF COMMUNICATION =====")
+        print("-> Motor stopped")
         ws3k2.motor(0, 0)

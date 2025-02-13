@@ -20,7 +20,7 @@ if __name__ == '__main__':
     os.makedirs('logs', exist_ok=True)
 
     print("\n\n\n===== INITIALIZATION PROCEDURE =====\n")
-    ws3k2 = WS3K2(['X', 'Y', 'Xt', 'Yt', 'target_heading', 'heading', 'correction', 'distance'])
+    ws3k2 = WS3K2(['x', 'y', 'xt', 'yt', 'target_heading', 'heading', 'correction', 'distance'])
 
     print("\n\n\n===== NAVIGATION TO WAYPOINT =====\n")
     coords_buoy = np.array([48.200117, -3.01574933])

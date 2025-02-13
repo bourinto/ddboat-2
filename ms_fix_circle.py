@@ -30,7 +30,7 @@ if __name__ == '__main__':
     def static_buoy(): return pos_buoy
 
 
-    print("\n===== Following the circle =====\n")
+    print("\n==== FOLLOWING THE CIRCLE =====\n")
 
     circle = MSCircle(30, 200, static_buoy)
     ws3k2.follow_virtual_point(virtual_traj=circle.trajectory, journey_time=450)
