@@ -1,7 +1,21 @@
+import socket
+import re
 from ws3k2_drivers import *
 
 if __name__ == '__main__':
-    ws3k2 = WS3K2(['x', 'y', 'xt', 'yt', 'target_heading', 'heading', 'correction', 'distance'])
+    hostname = socket.gethostname()
+    match = re.search(r'ddboat(\d+)', hostname)
+
+    if match:
+        boat_nb = match.group(1)
+    else:
+        print("Error while parsing hostname")
+        sys.exit(1)
+
+    print("\n\n\n===== WELCOME ON DDBOAT {} =====".format(boat_nb))
+    time.sleep(1)
+
+    do_calibration(boat_nb)
+    ws3k2 = WS3K2()
     coords_buoy = np.array([48.200117, -3.01574933])
-    pos_buoy = ws3k2.gps_to_xy(coords_buoy)
     ws3k2.navigate_to_waypoint(coords_buoy, base_speed=200, kp=130, dstop=10)

@@ -66,6 +66,6 @@ Once connected to the DDBOAT via SSH, you can execute any of the missions by fol
 ## Authors
 
 This project was developed by:
-- **BOURIN Toméo**,**DUNOT Clément**,**FLEURY Vianney** 
+- **BOURIN Toméo**, **DUNOT Clément**, **FLEURY Vianney** 
 
 From **ENSTA Bretagne ROB 26**.
