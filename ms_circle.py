@@ -12,4 +12,3 @@ if __name__ == '__main__':
 
     # Come back at end
     ws3k2.navigate_to_waypoint(ws3k2.ref_point, base_speed=200, kp=130, dstop=9)
-    ws3k2.motor(0, 0)
