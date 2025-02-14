@@ -1,3 +1,6 @@
+import sys
+sys.path.append('/home/ue32/grp09')
+
 from ws3k2_drivers import *
 import subprocess
 import socket
@@ -32,11 +35,8 @@ if __name__ == '__main__':
 
     if boat_nb == leader_id:
         print("----- You are the Leader -----\n")
-        subprocess.run('echo "pi" | script -q -c "su - pi -c \\"sudo cp gps-server.service /lib/systemd/system\\"" /dev/null', shell=True)
-        subprocess.run('echo "pi" | script -q -c "su - pi -c \\"sudo systemctl start gps-server.service\\"" /dev/null', shell=True)
-
-        subprocess.run("python3 ms_fix_circle.py", shell=True, executable="/bin/bash")
+        subprocess.run("/usr/bin/python3 /home/ue32/grp09/ms_fix_circle.py", shell=True, executable="/bin/bash")
 
     else:
         print("----- You are a Sidekick -----\n")
-        subprocess.run("python3 ms_follow_boat.py -id " + leader_id, shell=True, executable="/bin/bash")
+        subprocess.run("/usr/bin/python3 /home/ue32/grp09/ms_follow_boat.py -id " + leader_id, shell=True, executable="/bin/bash")

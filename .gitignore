@@ -3,3 +3,4 @@ logs
 __pycache__/
 drivers-ddboat-v2/
 calibration_data.npz
+*.bash
