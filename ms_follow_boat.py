@@ -1,5 +1,6 @@
-from ws3k2_drivers import *
 import argparse
+
+from ws3k2_drivers import *
 
 
 class MSFollow:

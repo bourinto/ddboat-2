@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append('/home/ue32/grp09')
 
 from ws3k2_drivers import *
@@ -39,4 +40,5 @@ if __name__ == '__main__':
 
     else:
         print("----- You are a Sidekick -----\n")
-        subprocess.run("/usr/bin/python3 /home/ue32/grp09/ms_follow_boat.py -id " + leader_id, shell=True, executable="/bin/bash")
+        subprocess.run("/usr/bin/python3 /home/ue32/grp09/ms_follow_boat.py -id " + leader_id, shell=True,
+                       executable="/bin/bash")

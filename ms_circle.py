@@ -1,5 +1,5 @@
-from ws3k2_drivers import *
 from ms_fix_circle import MSCircle
+from ws3k2_drivers import *
 
 if __name__ == '__main__':
     # Initialization

@@ -1,14 +1,13 @@
-import numpy as np
-import time
-import sys
 import os
+import sys
+import time
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'drivers-ddboat-v2'))
 import arduino_driver_v2 as arduino_driver
 import imu9_driver_v2 as imu_driver
 import gps_driver_v2 as gpsdrv
 
-from calibration import load_calibration, do_calibration
+from calibration import load_calibration
 from get_heading import get_heading
 from get_gps import get_gps_wt, convert_gps_coordinate
 from mini_roblib import *

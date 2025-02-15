@@ -1,6 +1,6 @@
-import os
-import socket
 import re
+import socket
+
 from ws3k2_drivers import *
 
 if __name__ == '__main__':

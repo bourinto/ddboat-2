@@ -1,71 +1,114 @@
 # DDBOAT Control Project
 
-This project controls a drone boat (DDBOAT) using various sensors such as GPS, IMU (magnetometer, accelerometer, gyroscope), and motor controllers. The boat is programmed to follow predefined missions involving heading control, waypoint navigation, and circular trajectory following.
+This project controls an Unmanned Surface Vehicle (USV), the DDBOAT, using various sensors such as GPS, IMU (
+magnetometer, accelerometer, gyroscope), and motor controllers. The boat is programmed to execute predefined missions
+including heading control, waypoint navigation, and swarm behaviors.
 
-**Demonstration and explanatory video available by** [**clicking here.**](https://www.youtube.com/watch?v=n9koBU_pk7A)
+**Note:** This project is a more advanced and accomplished iteration of our previous work available
+at [this link](https://gitlab.ensta-bretagne.fr/fleuryvi/ddboatws3k).
+
+**For a demonstration and explanation, please view our [video here](https://www.youtube.com/watch?v=n9koBU_pk7A).**
 
 ## Table of Contents
+
 - [Requirements](#requirements)
 - [Connection Setup](#connection-setup)
-- [Project Structure](#project-structure)
-- [How to Run the Missions](#how-to-run-the-missions)
+- [Programs Overview](#programs-overview)
+    - [Utilities](#utilities)
+    - [Control Functions](#control-functions)
+    - [Missions](#missions)
 - [Authors](#authors)
 
 ## Requirements
+
 To run this project, you need:
+
 - A DDBOAT equipped with GPS, IMU (magnetometer, accelerometer, gyroscope), and motors controlled via Arduino.
 - Access to the DARTAP WiFi network.
 - SSH access to the DDBOAT.
 
 ## Connection Setup
 
-Before running any mission, follow these steps:
+Before running any program, follow these steps:
 
 1. **Connect to DARTAP WiFi**:
-   - Ensure your machine is connected to the DARTAP WiFi network.
+    - Ensure your machine is connected to the DARTAP WiFi network.
 
 2. **SSH into the DDBOAT**:
-   - Open a terminal and use the following SSH command:
-     ```bash
-     ssh ue32@172.20.25.2XX
-     ```
-   - Replace `XX` with the correct DDBOAT number.
+    - Open a terminal and use the following SSH command:
+      ```bash
+      ssh ue32@172.20.25.2XX
+      ```
+    - Replace `XX` with the correct DDBOAT number.
 
-## Project Structure
+## Programs Overview
 
-This project includes several key Python scripts and modules:
+This project is organized into three main groups: utilities, control functions, and missions. While the utilities and
+control functions are not directly part of the high-level control system, they provide essential support for the
+missions.
 
-- **ws3k2_drivers.py**: Contains the `WS3K2` class for controlling the boat's motors, GPS navigation, and heading adjustments.
-- **calibration_data.npz**: Contains the calibration offset (`bmag`) and matrix (`Amag`) for the IMU's magnetometer, used to correct raw magnetometer data for accurate heading calculations.
-- **write_log.py**: A logging utility for recording the boat's data, such as position, heading, and correction values, into CSV files.
-- **ms_round_trip.py**: A mission where the boat moves northwest for 30 seconds, stops and rotates, then moves southeast for 30 seconds.
-- **ms_come_back.py**: A mission where the boat navigates back to a predefined home location.
-- **ms_circle.py**: A mission where the boat follows a circular trajectory around a buoy.
-- **mini_roblib.py**: Contains helper functions like `sawtooth` (for error correction) and rotation matrix calculations.
-- **get_heading.py**: Interfaces with the IMU to compute the boat's heading.
-- **get_gps.py**: Interfaces with the GPS device to fetch and convert GPS coordinates.
+### Utilities
 
-## How to Run the Missions
+These programs offer foundational support and auxiliary functionalities:
 
-Once connected to the DDBOAT via SSH, you can execute any of the missions by following these steps:
+- **client_server.py**  
+  A third-party program designed to enable communication between DDBOATs.
 
-1. **Run a mission**:
-   - Each mission script corresponds to a different task. For instance, to run the **round_trip** mission:
-     ```bash
-     python3 ms_round_trip.py
-     ```
+- **write_log.py**  
+  Implements a class for writing logs and handling print statements.
 
-2. **Mission Descriptions (by chronological order)**:
-   - **ms_round_trip.py**: The boat moves northwest for 30 seconds, then rotates to face southeast, and moves southeast for another 30 seconds.(Day 1)
-   - **ms_come_back.py**: The boat navigates back to a specified home location.(Often useful)
-   - **ms_circle.py**: The boat follows a circular trajectory around a buoy. The trajectory is dynamically calculated over time.(Day 2)
+- **mini_roblib.py**  
+  Contains mathematical functions to support navigation and control.
 
-3. **Logging**:
-   - Each mission logs critical data such as GPS coordinates, heading, correction values, and distance to a CSV file (`logs/{timestamp}.csv`). This log can be reviewed after the mission for analysis.
+### Control Functions
+
+These scripts handle the boat’s sensor data and core control computations:
+
+- **calibration.py**  
+  Calibrates the magnetometer to ensure accurate heading measurements.
+
+- **get_gps.py**  
+  Converts raw GPS data into a format that can be effectively exploited for navigation.
+
+- **get_heading.py**  
+  Utilizes the calibration data to compute the boat’s current heading.
+
+- **ws3k2_drivers.py**  
+  Contains the WS3K2 class for controlling the boat's motors, GPS navigation, and heading
+
+### Missions
+
+The following missions, which build upon the control functions, are organized in chronological order:
+
+- **ms_round_trip.py**  
+  Created to test the heading calibration. The boat performs a round-trip maneuver, initially moving in one direction
+  and then reversing after a calibration test.
+
+- **ms_come_back.py**  
+  Commands the boat to navigate back to the pontoon using GPS data.
+
+- **ms_fix_circle.py**  
+  Directs the boat to follow a circular trajectory around a static buoy.
+
+- **ms_circle.py**  
+  Guides the boat along a circular path around a moving buoy (for example, another DDBOAT).
+
+- **ms_follow_boat.py**  
+  Enables the boat to follow another DDBOAT.
+
+- **ms_nav_towp_swarm.py**  
+  A swarm test mission that launches every available DDBOAT toward the same GPS waypoint.
+
+- **consensus.py**  
+  The most advanced mission where one boat is declared the leader to perform a specified mission, while the other
+  DDBOATs follow its lead.
 
 ## Authors
 
 This project was developed by:
-- **BOURIN Toméo**, **DUNOT Clément**, **FLEURY Vianney** 
 
-From **ENSTA Bretagne ROB 26**.
+- **BOURIN Toméo**
+- **DUNOT Clément**
+- **FLEURY Vianney**
+
+From **ENSTA - Autonomous Robotic 2026**.

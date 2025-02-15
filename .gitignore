@@ -2,5 +2,7 @@ logs
 .idea
 __pycache__/
 drivers-ddboat-v2/
+calib_10.txt
+config.txt
 calibration_data.npz
 *.bash

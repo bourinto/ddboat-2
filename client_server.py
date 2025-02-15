@@ -1,9 +1,7 @@
 import socket
+import sys
 import threading
 import time
-import random
-import sys
-import signal
 
 # whole client server code : must be split into two files
 #  - server code
