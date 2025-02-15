@@ -38,9 +38,7 @@ This project includes several key Python scripts and modules:
 - **ws3k2_drivers.py**: Contains the `WS3K2` class for controlling the boat's motors, GPS navigation, and heading adjustments.
 - **mini_roblib.py**: Contains helper functions like `sawtooth` (for error correction) and rotation matrix calculations.
 - **calibration.py**: A script to obtain the calibration data and store it in `calibration_data.npz`.
-- **calibration_data.npz**: Contains the calibration offset (`bmag`) and matrix (`Amag`) for the IMU's magnetometer, used to correct raw magnetometer data for accurate heading calculations.
-- **calib_10.txt**: Contains the raw calibration data for the IMU's magnetometer in a specific format to be used in `consensus.py`.
-- **config.txt**: Contains the IDs of the boats that are expected to be used for the `consensus.py` mission.
+
 
 - **get_heading.py**: Interfaces with the IMU to compute the boat's heading.
 - **get_gps.py**: Interfaces with the GPS device to fetch and convert GPS coordinates.
