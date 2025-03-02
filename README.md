@@ -89,19 +89,42 @@ The following missions, which build upon the control functions, are organized in
 
 - **ms_fix_circle.py**  
   Directs the boat to follow a circular trajectory around a static buoy.
+  <div align="center">
+  <video width="500" controls>
+    <source src="Images/circle.mp4" type="video/mp4">
+  </video>
+</div>
 
 - **ms_circle.py**  
   Guides the boat along a circular path around a moving buoy (for example, another DDBOAT).
 
 - **ms_follow_boat.py**  
   Enables the boat to follow another DDBOAT.
+  <div align="center">
+  <video width="500" controls>
+    <source src="Images/IMG_4793.MP4" type="video/mp4">
+  </video>
+</div>
+
 
 - **ms_nav_towp_swarm.py**  
   A swarm test mission that launches every available DDBOAT toward the same GPS waypoint.
+  <div align="center">
+  <video width="500" controls>
+    <source src="Images/IMG_4214.MP4" type="video/mp4">
+  </video>
+</div>
 
 - **consensus.py**  
   The most advanced mission where one boat is declared the leader to perform a specified mission, while the other
   DDBOATs follow its lead.
+  <div align="center">
+  <video width="500" controls>
+    <source src="Images/consensus.mp4" type="video/mp4">
+  </video>
+</div>
+
+**Note:** You can find videos representing some of the missions directly on the README.md.
 
 ## Authors
 
