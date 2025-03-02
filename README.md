@@ -88,7 +88,7 @@ The following missions, which build upon the control functions, are organized in
   Commands the boat to navigate back to the pontoon using GPS data.
 
 - **ms_fix_circle.py**  
-  Directs the boat to follow a circular trajectory around a static buoy.
+  Directs the boat to follow a circular trajectory around a static buoy. [Demonstration here.](Images/circle.mp4)
   <div align="center">
   <video width="500" controls>
     <source src="Images/circle.mp4" type="video/mp4">
@@ -99,7 +99,7 @@ The following missions, which build upon the control functions, are organized in
   Guides the boat along a circular path around a moving buoy (for example, another DDBOAT).
 
 - **ms_follow_boat.py**  
-  Enables the boat to follow another DDBOAT.
+  Enables the boat to follow another DDBOAT. [Demonstration here.](Images/IMG_4793.MP4)
   <div align="center">
   <video width="500" controls>
     <source src="Images/IMG_4793.MP4" type="video/mp4">
@@ -108,7 +108,8 @@ The following missions, which build upon the control functions, are organized in
 
 
 - **ms_nav_towp_swarm.py**  
-  A swarm test mission that launches every available DDBOAT toward the same GPS waypoint.
+  A swarm test mission that launches every available DDBOAT toward the same GPS waypoint. [Demonstration here.](Images/IMG_4214.MP4)
+
   <div align="center">
   <video width="500" controls>
     <source src="Images/IMG_4214.MP4" type="video/mp4">
@@ -117,7 +118,8 @@ The following missions, which build upon the control functions, are organized in
 
 - **consensus.py**  
   The most advanced mission where one boat is declared the leader to perform a specified mission, while the other
-  DDBOATs follow its lead.
+  DDBOATs follow its lead. [Demonstration here.](Images/consensus.MP4)
+
   <div align="center">
   <video width="500" controls>
     <source src="Images/consensus.mp4" type="video/mp4">
