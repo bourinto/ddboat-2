@@ -7,7 +7,7 @@ including heading control, waypoint navigation, and swarm behaviors.
 **Note:** This project is a more advanced and accomplished iteration of our previous work available
 at [this link](https://gitlab.ensta-bretagne.fr/fleuryvi/ddboatws3k).
 
-**For a demonstration and explanation, please view our [video here](https://www.youtube.com/watch?v=n9koBU_pk7A).**
+**For a demonstration and explanation, please view our [video here](https://www.youtube.com/watch?v=INGWGhuL-2k).**
 
 ## Table of Contents
 
