@@ -93,7 +93,7 @@ The following missions, which build upon the control functions, are organized in
   <video width="500" controls>
     <source src="Images/circle.mp4" type="video/mp4">
   </video>
-</div>
+  </div>
 
 - **ms_circle.py**  
   Guides the boat along a circular path around a moving buoy (for example, another DDBOAT).
@@ -104,7 +104,7 @@ The following missions, which build upon the control functions, are organized in
   <video width="500" controls>
     <source src="Images/IMG_4793.MP4" type="video/mp4">
   </video>
-</div>
+  </div>
 
 
 - **ms_nav_towp_swarm.py**  
@@ -114,7 +114,7 @@ The following missions, which build upon the control functions, are organized in
   <video width="500" controls>
     <source src="Images/IMG_4214.MP4" type="video/mp4">
   </video>
-</div>
+  </div>
 
 - **consensus.py**  
   The most advanced mission where one boat is declared the leader to perform a specified mission, while the other
@@ -124,7 +124,7 @@ The following missions, which build upon the control functions, are organized in
   <video width="500" controls>
     <source src="Images/consensus.mp4" type="video/mp4">
   </video>
-</div>
+  </div>
 
 **Note:** You can find videos representing some of the missions directly on the README.md.
 
