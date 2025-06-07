@@ -1,5 +1,7 @@
-from ms_fix_circle import MSCircle
-from ws3k2_drivers import *
+import numpy as np
+
+from ddboat.core.ws3k2_drivers import WS3K2
+from ddboat.missions.ms_fix_circle import MSCircle
 
 if __name__ == '__main__':
     # Initialization

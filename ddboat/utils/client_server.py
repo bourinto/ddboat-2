@@ -2,6 +2,7 @@ import socket
 import sys
 import threading
 import time
+import os
 
 # whole client server code : must be split into two files
 #  - server code
@@ -39,7 +40,9 @@ def handle_client(conn, addr, gps):
 def robot1_server():
     global gps_position
     gps_position = "0.0;N;0.0;E\0"
-    sys.path.append('/home/pi/git/drivers-ddboat-v2')
+    sys.path.append(
+        os.path.join(os.path.dirname(__file__), '..', 'drivers-ddboat-v2')
+    )
     import gps_driver_v2 as gps_drv
     gps = gps_drv.GpsIO(tty_dev=1)
     gps.set_filter_speed("0")

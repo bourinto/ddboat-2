@@ -2,7 +2,9 @@
 
 This project controls an Unmanned Surface Vehicle (USV), the DDBOAT, using various sensors such as GPS, IMU (
 magnetometer, accelerometer, gyroscope), and motor controllers. The boat is programmed to execute predefined missions
-including heading control, waypoint navigation, and swarm behaviors.
+including heading control, waypoint navigation, and swarm behaviors. The
+source code is organized as a Python package to simplify reuse and
+deployment on the boats.
 
 **Note:** This project is a more advanced and accomplished iteration of our previous work available
 at [this link](https://gitlab.ensta-bretagne.fr/fleuryvi/ddboatws3k).
@@ -43,51 +45,42 @@ Before running any program, follow these steps:
 
 ## Programs Overview
 
-This project is organized into three main groups: utilities, control functions, and missions. While the utilities and
-control functions are not directly part of the high-level control system, they provide essential support for the
-missions.
+This project is organized as a Python package named **`ddboat`** with three main
+subpackages: **utilities**, **core functions**, and **missions**. The utilities
+and core functions provide essential support for the high-level mission scripts
+located under `ddboat/missions`.
 
 ### Utilities
 
-These programs offer foundational support and auxiliary functionalities:
+Located in `ddboat/utils`, these modules offer foundational support and
+auxiliary functionalities:
 
-- **client_server.py**  
-  A third-party program designed to enable communication between DDBOATs.
+- **client_server.py** – communication helpers for multi-boat setups
+- **write_log.py** – simple CSV logging utility
+- **mini_roblib.py** – mathematical helpers for navigation
 
-- **write_log.py**  
-  Implements a class for writing logs and handling print statements.
+### Core Functions
 
-- **mini_roblib.py**  
-  Contains mathematical functions to support navigation and control.
+Located in `ddboat/core`, these modules handle the boat’s sensor data and
+control computations:
 
-### Control Functions
-
-These scripts handle the boat’s sensor data and core control computations:
-
-- **calibration.py**  
-  Calibrates the magnetometer to ensure accurate heading measurements.
-
-- **get_gps.py**  
-  Converts raw GPS data into a format that can be effectively exploited for navigation.
-
-- **get_heading.py**  
-  Utilizes the calibration data to compute the boat’s current heading.
-
-- **ws3k2_drivers.py**  
-  Contains the WS3K2 class for controlling the boat's motors, GPS navigation, and heading
+- **calibration.py** – magnetometer calibration utilities
+- **get_gps.py** – GPS parsing helpers
+- **get_heading.py** – compute heading from IMU data
+- **ws3k2_drivers.py** – main driver class for sensors and motors
 
 ### Missions
 
-The following missions, which build upon the control functions, are organized in chronological order:
+Mission scripts are found under `ddboat/missions` and build upon the core functions. They are organized in chronological order:
 
-- **ms_round_trip.py**  
+- **ddboat/missions/ms_round_trip.py**
   Created to test the heading calibration. The boat performs a round-trip maneuver, initially moving in one direction
   and then reversing after a calibration test.
 
-- **ms_come_back.py**  
+- **ddboat/missions/ms_come_back.py**
   Commands the boat to navigate back to the pontoon using GPS data.
 
-- **ms_fix_circle.py**  
+- **ddboat/missions/ms_fix_circle.py**
   Directs the boat to follow a circular trajectory around a static buoy. [Demonstration here.](Images/circle.mp4)
   <div align="center">
   <video width="500" controls>
@@ -95,10 +88,10 @@ The following missions, which build upon the control functions, are organized in
   </video>
   </div>
 
-- **ms_circle.py**  
+- **ddboat/missions/ms_circle.py**
   Guides the boat along a circular path around a moving buoy (for example, another DDBOAT).
 
-- **ms_follow_boat.py**  
+- **ddboat/missions/ms_follow_boat.py**
   Enables the boat to follow another DDBOAT. [Demonstration here.](Images/IMG_4793.MP4)
   <div align="center">
   <video width="500" controls>
@@ -107,7 +100,7 @@ The following missions, which build upon the control functions, are organized in
   </div>
 
 
-- **ms_nav_towp_swarm.py**  
+- **ddboat/missions/ms_navtowp_swarm.py**
   A swarm test mission that launches every available DDBOAT toward the same GPS waypoint. [Demonstration here.](Images/IMG_4214.MP4)
 
   <div align="center">
@@ -116,7 +109,7 @@ The following missions, which build upon the control functions, are organized in
   </video>
   </div>
 
-- **consensus.py**  
+- **ddboat/missions/consensus.py**
   The most advanced mission where one boat is declared the leader to perform a specified mission, while the other
   DDBOATs follow its lead. [Demonstration here.](Images/consensus.MP4)
 

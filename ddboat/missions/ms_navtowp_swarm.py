@@ -1,7 +1,9 @@
 import re
 import socket
+import numpy as np
 
-from ws3k2_drivers import *
+from ddboat.core.ws3k2_drivers import WS3K2
+from ddboat.utils.calibration import do_calibration
 
 if __name__ == '__main__':
     hostname = socket.gethostname()

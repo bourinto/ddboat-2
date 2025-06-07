@@ -2,7 +2,9 @@ import os
 import sys
 import time
 
-sys.path.append(os.path.join(os.path.dirname(__file__), 'drivers-ddboat-v2'))
+sys.path.append(
+    os.path.join(os.path.dirname(__file__), '..', 'drivers-ddboat-v2')
+)
 import gps_driver_v2 as gpsdrv
 
 

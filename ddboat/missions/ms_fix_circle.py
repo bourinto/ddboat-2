@@ -1,4 +1,6 @@
-from ws3k2_drivers import *
+import numpy as np
+
+from ddboat.core.ws3k2_drivers import WS3K2
 
 
 class MSCircle:

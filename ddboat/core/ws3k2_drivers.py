@@ -2,18 +2,20 @@ import os
 import sys
 import time
 
-sys.path.append(os.path.join(os.path.dirname(__file__), 'drivers-ddboat-v2'))
+sys.path.append(
+    os.path.join(os.path.dirname(__file__), '..', 'drivers-ddboat-v2')
+)
 import arduino_driver_v2 as arduino_driver
 import imu9_driver_v2 as imu_driver
 import gps_driver_v2 as gpsdrv
 
-from calibration import load_calibration
-from get_heading import get_heading
-from get_gps import get_gps_wt, convert_gps_coordinate
-from mini_roblib import *
-from client_server import robot2_client_onetime
+from ..utils.calibration import load_calibration
+from ..utils.get_heading import get_heading
+from ..utils.get_gps import get_gps_wt, convert_gps_coordinate
+from ..utils.mini_roblib import *
+from ..utils.client_server import robot2_client_onetime
 
-from write_log import Log
+from ..utils.write_log import Log
 
 
 class WS3K2:
