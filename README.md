@@ -1,47 +1,48 @@
 # DDBOAT Control Project
 
-This project controls an Unmanned Surface Vehicle (USV), the DDBOAT, using various sensors such as GPS, IMU (
-magnetometer, accelerometer, gyroscope), and motor controllers. The boat is programmed to execute predefined missions
-including heading control, waypoint navigation, and swarm behaviors. The
-source code is organized as a Python package to simplify reuse and
-deployment on the boats.
+This repo was developed during a 5-day robotics camp at Lake Guerlédan, Brittany, France, as a practical application of navigation and control theory.
 
-**Note:** This project is a more advanced and accomplished iteration of our previous work available
-at [this link](https://gitlab.ensta-bretagne.fr/fleuryvi/ddboatws3k).
+This project controls an USV, the DDBOAT, using sensors such as GPS, IMU and motor controllers. The boat is programmed to execute predefined missions
+including heading control, waypoint navigation, and swarm behaviors.\
+The source code is organized as a Python package to simplify reuse and
+deployment on the boats.
 
 **For a demonstration and explanation, please view our [video here](https://www.youtube.com/watch?v=INGWGhuL-2k).**
 
 ## Table of Contents
 
-- [Requirements](#requirements)
-- [Connection Setup](#connection-setup)
-- [Programs Overview](#programs-overview)
-    - [Utilities](#utilities)
-    - [Control Functions](#control-functions)
-    - [Missions](#missions)
-- [Authors](#authors)
+* [Requirements](#requirements)
+* [Connection Setup](#connection-setup)
+* [Programs Overview](#programs-overview)
+  * [Utilities](#utilities)
+  * [Core Functions](#core-functions)
+  * [Missions](#missions)
+* [Authors](#authors)
 
 ## Requirements
 
 To run this project, you need:
 
-- A DDBOAT equipped with GPS, IMU (magnetometer, accelerometer, gyroscope), and motors controlled via Arduino.
-- Access to the DARTAP WiFi network.
-- SSH access to the DDBOAT.
+* A DDBOAT equipped with GPS, IMU (magnetometer, accelerometer, gyroscope), and motors controlled via Arduino.
+* Access to the DARTAP WiFi network.
+* SSH access to the DDBOAT.
 
 ## Connection Setup
 
 Before running any program, follow these steps:
 
 1. **Connect to DARTAP WiFi**:
-    - Ensure your machine is connected to the DARTAP WiFi network.
+
+   * Ensure your machine is connected to the DARTAP WiFi network.
 
 2. **SSH into the DDBOAT**:
-    - Open a terminal and use the following SSH command:
-      ```bash
-      ssh ue32@172.20.25.2XX
-      ```
-    - Replace `XX` with the correct DDBOAT number.
+
+   * Open a terminal and use the following SSH command:
+
+     ```bash
+     ssh ue32@172.20.25.2XX
+     ```
+   * Replace `XX` with the correct DDBOAT number.
 
 ## Programs Overview
 
@@ -55,52 +56,53 @@ located under `ddboat/missions`.
 Located in `ddboat/utils`, these modules offer foundational support and
 auxiliary functionalities:
 
-- **client_server.py** – communication helpers for multi-boat setups
-- **write_log.py** – simple CSV logging utility
-- **mini_roblib.py** – mathematical helpers for navigation
+* **client\_server.py** – communication helpers for multi-boat setups
+* **write\_log.py** – simple CSV logging utility
+* **mini\_roblib.py** – mathematical helpers for navigation
 
 ### Core Functions
 
 Located in `ddboat/core`, these modules handle the boat’s sensor data and
 control computations:
 
-- **calibration.py** – magnetometer calibration utilities
-- **get_gps.py** – GPS parsing helpers
-- **get_heading.py** – compute heading from IMU data
-- **ws3k2_drivers.py** – main driver class for sensors and motors
+* **calibration.py** – magnetometer calibration utilities
+* **get\_gps.py** – GPS parsing helpers
+* **get\_heading.py** – compute heading from IMU data
+* **ws3k2\_drivers.py** – main driver class for sensors and motors
 
 ### Missions
 
 Mission scripts are found under `ddboat/missions` and build upon the core functions. They are organized in chronological order:
 
-- **ddboat/missions/ms_round_trip.py**
+* **ddboat/missions/ms\_round\_trip.py**
   Created to test the heading calibration. The boat performs a round-trip maneuver, initially moving in one direction
   and then reversing after a calibration test.
 
-- **ddboat/missions/ms_come_back.py**
+* **ddboat/missions/ms\_come\_back.py**
   Commands the boat to navigate back to the pontoon using GPS data.
 
-- **ddboat/missions/ms_fix_circle.py**
+* **ddboat/missions/ms\_fix\_circle.py**
   Directs the boat to follow a circular trajectory around a static buoy. [Demonstration here.](Images/circle.mp4)
+
   <div align="center">
   <video width="500" controls>
     <source src="Images/circle.mp4" type="video/mp4">
   </video>
   </div>
 
-- **ddboat/missions/ms_circle.py**
+* **ddboat/missions/ms\_circle.py**
   Guides the boat along a circular path around a moving buoy (for example, another DDBOAT).
 
-- **ddboat/missions/ms_follow_boat.py**
+* **ddboat/missions/ms\_follow\_boat.py**
   Enables the boat to follow another DDBOAT. [Demonstration here.](Images/IMG_4793.MP4)
+
   <div align="center">
   <video width="500" controls>
     <source src="Images/IMG_4793.MP4" type="video/mp4">
   </video>
   </div>
 
-
-- **ddboat/missions/ms_navtowp_swarm.py**
+* **ddboat/missions/ms\_navtowp\_swarm.py**
   A swarm test mission that launches every available DDBOAT toward the same GPS waypoint. [Demonstration here.](Images/IMG_4214.MP4)
 
   <div align="center">
@@ -109,7 +111,7 @@ Mission scripts are found under `ddboat/missions` and build upon the core functi
   </video>
   </div>
 
-- **ddboat/missions/consensus.py**
+* **ddboat/missions/consensus.py**
   The most advanced mission where one boat is declared the leader to perform a specified mission, while the other
   DDBOATs follow its lead. [Demonstration here.](Images/consensus.MP4)
 
@@ -125,8 +127,8 @@ Mission scripts are found under `ddboat/missions` and build upon the core functi
 
 This project was developed by:
 
-- **BOURIN Toméo**
-- **DUNOT Clément**
-- **FLEURY Vianney**
+* [@Bourinto](https://github.com/bourinto)
+* [@ClementNewCal](https://github.com/ClementNewCal)
+* [@Vflry](https://github.com/vflry)
 
 From **ENSTA - Autonomous Robotic 2026**.
