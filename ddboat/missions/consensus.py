@@ -1,11 +1,12 @@
 import sys
-
-sys.path.append('/home/ue32/grp09')
-
-from ws3k2_drivers import *
 import subprocess
 import socket
 import re
+import time
+import os
+
+from ddboat.core.ws3k2_drivers import WS3K2
+from ddboat.utils.calibration import do_calibration
 
 if __name__ == '__main__':
 
