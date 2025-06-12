@@ -84,42 +84,18 @@ Mission scripts are found under `ddboat/missions` and build upon the core functi
 * **ddboat/missions/ms\_fix\_circle.py**
   Directs the boat to follow a circular trajectory around a static buoy. [Demonstration here.](Images/circle.mp4)
 
-  <div align="center">
-  <video width="500" controls>
-    <source src="Images/circle.mp4" type="video/mp4">
-  </video>
-  </div>
-
 * **ddboat/missions/ms\_circle.py**
   Guides the boat along a circular path around a moving buoy (for example, another DDBOAT).
 
 * **ddboat/missions/ms\_follow\_boat.py**
   Enables the boat to follow another DDBOAT. [Demonstration here.](Images/IMG_4793.MP4)
 
-  <div align="center">
-  <video width="500" controls>
-    <source src="Images/IMG_4793.MP4" type="video/mp4">
-  </video>
-  </div>
-
 * **ddboat/missions/ms\_navtowp\_swarm.py**
-  A swarm test mission that launches every available DDBOAT toward the same GPS waypoint. [Demonstration here.](Images/IMG_4214.MP4)
-
-  <div align="center">
-  <video width="500" controls>
-    <source src="Images/IMG_4214.MP4" type="video/mp4">
-  </video>
-  </div>
+  A swarm test mission that launches every available DDBOAT toward the same GPS waypoint.
 
 * **ddboat/missions/consensus.py**
   The most advanced mission where one boat is declared the leader to perform a specified mission, while the other
-  DDBOATs follow its lead. [Demonstration here.](Images/consensus.MP4)
-
-  <div align="center">
-  <video width="500" controls>
-    <source src="Images/consensus.mp4" type="video/mp4">
-  </video>
-  </div>
+  DDBOATs follow its lead.  [Demonstration here.](Images/IMG_4214.MP4)
 
 **Note:** You can find videos representing some of the missions directly on the README.md.
 
